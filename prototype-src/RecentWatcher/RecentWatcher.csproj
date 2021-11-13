@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-RecentWatcher-813C5152-7AE8-4F50-A504-7A143E113FF6</UserSecretsId>
+    <RootNamespace>elf.RecentWatcher</RootNamespace>
+	  <OutputType>WinExe</OutputType>
+	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	  <PlatformTarget>x64</PlatformTarget>
+	  <ApplicationIcon />
+	  <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\elf.DataAccess.Sqlite\elf.DataAccess.Sqlite.csproj" />
+    <ProjectReference Include="..\elf.DataAccessInterfaces\elf.DataAccessInterfaces.csproj" />
+    <ProjectReference Include="..\elf.Windows.Libraries\elf.Windows.Libraries.csproj" />
+    <ProjectReference Include="..\RecentWatcher.DataAccess\RecentWatcher.DataAccess.csproj" />
+    <ProjectReference Include="..\RecentWatcher.Models\RecentWatcher.Models.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
+</Project>

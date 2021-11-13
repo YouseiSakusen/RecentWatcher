@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RecentWatcher": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\elf_m\\Recent",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true"
+    }
+  }
+}
