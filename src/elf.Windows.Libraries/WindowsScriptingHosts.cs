@@ -1,4 +1,6 @@
-﻿namespace elf.Windows.Libraries;
+﻿using System.Text;
+
+namespace elf.Windows.Libraries;
 
 /// <summary>WindowsScriptingHostライブラリを表します。</summary>
 public static class WindowsScriptingHosts
@@ -23,6 +25,10 @@ public static class WindowsScriptingHosts
 
 		dynamic shell = Activator.CreateInstance(wshType)!;
 
-		return shell.CreateShortcut(shortcutFilePath).TargetPath;
+		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+		var s_jisBytes = Encoding.GetEncoding("shift_jis").GetBytes(shortcutFilePath);
+		var s_jisString = Encoding.GetEncoding("shift_jis").GetString(s_jisBytes);
+
+		return shell.CreateShortcut(Encoding.GetEncoding("shift_jis").GetString(s_jisBytes)).TargetPath;
 	}
 }

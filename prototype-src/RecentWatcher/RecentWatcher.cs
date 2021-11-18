@@ -34,8 +34,11 @@ namespace elf.RecentWatcher
 			await this.textLogger.WriteAsync($"this.settings.RecentFolderPath - {this.settings.RecentFolderPath}");
 			await this.textLogger.WriteAsync($"recentDir - {recentDir.FullName}");
 
-			foreach (var item in recentDir.EnumerateFiles("*.lnk"))
-				await this.writeToRecentFile(item.FullName, this.settings.LatestRecentDateTime);
+			using (var shellLink = new ShellLink())
+			{
+				foreach (var item in recentDir.EnumerateFiles("*.lnk"))
+					await this.writeToRecentFile(item.FullName, this.settings.LatestRecentDateTime, shellLink);
+			}
 
 			await this.textLogger.WriteAsync($"初期書き込み完了");
 		}
@@ -44,11 +47,17 @@ namespace elf.RecentWatcher
 		{
 			// FileSystemWatcherを初期化
 			this.watcher = new FileSystemWatcher(this.settings.RecentFolderPath);
-			this.watcher.Created += async (object sender, FileSystemEventArgs e) => await this.writeToRecentFile(e.FullPath, null);
+			this.watcher.Created += async (object sender, FileSystemEventArgs e) =>
+			{
+				using (var shellLink = new ShellLink())
+				{
+					await this.writeToRecentFile(e.FullPath, null, shellLink);
+				}
+			};
 			this.watcher.EnableRaisingEvents = true;
 		}
 
-		private async Task writeToRecentFile(string linkFilePath, DateTime? minDateTime)
+		private async Task writeToRecentFile(string linkFilePath, DateTime? minDateTime, ShellLink shellLink)
 		{
 			var linkFile = new FileInfo(linkFilePath);
 
@@ -58,7 +67,7 @@ namespace elf.RecentWatcher
 					return;
 			}
 
-			var realPath = WindowsScriptingHosts.GetShortcutFileTargetPath(linkFilePath);
+			var realPath = shellLink.GetLinkSourceFilePath(linkFilePath);
 			await this.textLogger.WriteAsync($"{nameof(writeToRecentFile)} - ショートカットファイルのパス({realPath})");
 
 			if (this.settings.Extensions.Any(e => e == Path.GetExtension(realPath)))

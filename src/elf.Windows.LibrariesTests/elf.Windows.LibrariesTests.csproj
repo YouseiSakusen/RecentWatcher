@@ -23,4 +23,13 @@
     <ProjectReference Include="..\elf.Windows.Libraries\elf.Windows.Libraries.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ヴァニタスの手記 Mémoire 04 「Bal masqué―仮面が嗤う夜―」 %28WebRip 1920x1080 HEVC AAC EMBER%29.mkv.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="出会って5秒でバトル 第07話 「暴君」 %28WebRip 1920x1080 HEVC AAC EMBER%29.mkv.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
