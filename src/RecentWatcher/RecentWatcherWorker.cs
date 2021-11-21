@@ -2,21 +2,20 @@ namespace RecentWatcher;
 
 public class RecentWatcherWorker : BackgroundService
 {
-    private readonly ILogger<RecentWatcherWorker> _logger;
+	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+	{
+		// ここに実行する処理を記述
 
-    public RecentWatcherWorker(ILogger<RecentWatcherWorker> logger)
-    {
-        _logger = logger;
-    }
+		var tcs = new TaskCompletionSource<bool>();
+		stoppingToken.Register(s => (s as TaskCompletionSource<bool>)?.SetResult(true), tcs);
+		await tcs.Task;
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        // ここに実行する処理を記述
+		logger.LogInformation($"{nameof(RecentWatcherWorker)} Finished!");
+	}
 
-        var tcs = new TaskCompletionSource<bool>();
-        stoppingToken.Register(s => (s as TaskCompletionSource<bool>)?.SetResult(true), tcs);
-        await tcs.Task;
+	private readonly ILogger<RecentWatcherWorker> logger;
+	private readonly RecentFileWatcher watcher;
 
-        _logger.LogInformation($"{nameof(RecentWatcherWorker)} Finished!");
-    }
+	public RecentWatcherWorker(ILogger<RecentWatcherWorker> workerLogger, RecentFileWatcher recentFileWatcher)
+		=> (logger, this.watcher) = (workerLogger, recentFileWatcher);
 }

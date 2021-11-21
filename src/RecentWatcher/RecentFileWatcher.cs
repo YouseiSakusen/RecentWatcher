@@ -10,6 +10,7 @@ public class RecentFileWatcher : IDisposable
 	/// <summary>最近使ったファイルフォルダの監視を開始します。</summary>
 	public void StartAsync()
 	{
+		// FileSystemWatcherを初期化
 		this.watcher = new FileSystemWatcher(Environment.GetFolderPath(Environment.SpecialFolder.Recent));
 		this.watcher.Created += (object sender, FileSystemEventArgs e) =>
 		{
@@ -23,28 +24,20 @@ public class RecentFileWatcher : IDisposable
 		//this.initializedFileSystemWatcher(Environment.GetFolderPath(Environment.SpecialFolder.Recent));
 	}
 
-	/// <summary>FileSystemWatcherを初期化します。</summary>
-	/// <param name="recentFolderPath">最近使ったファイルフォルダのフルパスを表す文字列。</param>
-	private void initializedFileSystemWatcher(string recentFolderPath)
-	{
-		this.watcher = new FileSystemWatcher(recentFolderPath);
-		this.watcher.Created += (object sender, FileSystemEventArgs e) =>
-		{
-			using (var shellLink = new ShellLink())
-			{
-				Console.WriteLine(shellLink.GetLinkSourceFilePath(e.FullPath));
-			}
-		};
-		this.watcher.EnableRaisingEvents = true;
-	}
-
-	public string getSourceFilePath(string linkFilePath)
-	{
-		var linkFile = new FileInfo(linkFilePath);
-		//var realPath = WindowsScriptingHosts.GetShortcutFileTargetPath(linkFilePath);
-
-		throw new NotImplementedException();
-	}
+	///// <summary>FileSystemWatcherを初期化します。</summary>
+	///// <param name="recentFolderPath">最近使ったファイルフォルダのフルパスを表す文字列。</param>
+	//private void initializedFileSystemWatcher(string recentFolderPath)
+	//{
+	//	this.watcher = new FileSystemWatcher(recentFolderPath);
+	//	this.watcher.Created += (object sender, FileSystemEventArgs e) =>
+	//	{
+	//		using (var shellLink = new ShellLink())
+	//		{
+	//			Console.WriteLine(shellLink.GetLinkSourceFilePath(e.FullPath));
+	//		}
+	//	};
+	//	this.watcher.EnableRaisingEvents = true;
+	//}
 
 	private bool disposedValue;
 
