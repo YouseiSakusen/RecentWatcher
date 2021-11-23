@@ -1,10 +1,15 @@
+using elf.DataAccess.SqLite;
+using elf.DataAccesses.Interfaces;
 using RecentWatcher;
 
 IHost host = Host.CreateDefaultBuilder(args)
-	.ConfigureServices(services =>
+	.ConfigureServices((hostContext, services) =>
 	{
+		var dbPath = Path.Combine(AppContext.BaseDirectory, hostContext.Configuration.GetSection("SqliteFileName").Value);
+
 		services.AddHostedService<RecentWatcherWorker>()
-			.AddTransient<RecentFileWatcher>();
+			.AddSingleton<RecentFileWatcher>()
+			.AddSingleton<IDapperConnectionFactory>(new DapperSqLiteConnectionFactory(dbPath));
 	})
 	.Build();
 

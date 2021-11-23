@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\elf.DataAccess.SqLite\elf.DataAccess.SqLite.csproj" />
     <ProjectReference Include="..\elf.DataAccessInterfaces\elf.DataAccesses.Interfaces.csproj" />
     <ProjectReference Include="..\elf.Windows.Libraries\elf.Windows.Libraries.csproj" />
   </ItemGroup>

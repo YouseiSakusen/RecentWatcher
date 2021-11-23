@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "elf.Windows.LibrariesTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elf.DataAccesses.Interfaces", "elf.DataAccessInterfaces\elf.DataAccesses.Interfaces.csproj", "{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elf.DataAccess.SqLite", "elf.DataAccess.SqLite\elf.DataAccess.SqLite.csproj", "{BF461986-8A52-4188-AFC2-580FE603E7F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF461986-8A52-4188-AFC2-580FE603E7F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF461986-8A52-4188-AFC2-580FE603E7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF461986-8A52-4188-AFC2-580FE603E7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF461986-8A52-4188-AFC2-580FE603E7F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

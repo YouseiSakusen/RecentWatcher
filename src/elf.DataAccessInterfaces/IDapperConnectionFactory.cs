@@ -5,9 +5,7 @@ namespace elf.DataAccesses.Interfaces;
 /// <summary>DapperでDBへアクセスするためのインタフェースを表します。</summary>
 public interface IDapperConnectionFactory
 {
-	/// <summary>
-	/// DbConnectionを取得します。
-	/// </summary>
+	/// <summary>DbConnectionを取得します。</summary>
 	/// <returns>取得したDbConnection。</returns>
 	public Task<DbConnection> GetConnectionAsync();
 
