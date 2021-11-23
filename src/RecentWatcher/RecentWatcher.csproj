@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\elf.DataAccessInterfaces\elf.DataAccesses.Interfaces.csproj" />
     <ProjectReference Include="..\elf.Windows.Libraries\elf.Windows.Libraries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="recentFiles.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

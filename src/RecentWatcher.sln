@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecentWatcher", "RecentWatcher\RecentWatcher.csproj", "{792BBA71-AEDD-4912-9D3A-B2E5AF51751E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elf.Windows.Libraries", "elf.Windows.Libraries\elf.Windows.Libraries.csproj", "{06C67B14-FF4C-48D7-BCCC-CD54E010E0EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "elf.Windows.Libraries", "elf.Windows.Libraries\elf.Windows.Libraries.csproj", "{06C67B14-FF4C-48D7-BCCC-CD54E010E0EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elf.Windows.LibrariesTests", "elf.Windows.LibrariesTests\elf.Windows.LibrariesTests.csproj", "{7AEC7CC3-6A59-461F-AF03-804BDED8AED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "elf.Windows.LibrariesTests", "elf.Windows.LibrariesTests\elf.Windows.LibrariesTests.csproj", "{7AEC7CC3-6A59-461F-AF03-804BDED8AED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elf.DataAccesses.Interfaces", "elf.DataAccessInterfaces\elf.DataAccesses.Interfaces.csproj", "{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7AEC7CC3-6A59-461F-AF03-804BDED8AED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AEC7CC3-6A59-461F-AF03-804BDED8AED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AEC7CC3-6A59-461F-AF03-804BDED8AED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48BF0E70-30AE-47E1-A488-A33E3A3CC7A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
