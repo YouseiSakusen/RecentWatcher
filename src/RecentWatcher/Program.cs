@@ -9,7 +9,8 @@ IHost host = Host.CreateDefaultBuilder(args)
 
 		services.AddHostedService<RecentWatcherWorker>()
 			.AddSingleton<RecentFileWatcher>()
-			.AddSingleton<IDapperConnectionFactory>(new DapperSqLiteConnectionFactory(dbPath));
+			.AddSingleton<IDapperConnectionFactory>(new DapperSqLiteConnectionFactory(dbPath))
+			.AddTransient<RecentFileEditor>();
 	})
 	.Build();
 
