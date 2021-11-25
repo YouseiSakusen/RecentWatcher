@@ -1,5 +1,4 @@
-﻿using elf.DataAccesses.Interfaces;
-using elf.Windows.Libraries;
+﻿using elf.Windows.Libraries;
 
 namespace RecentWatcher;
 
@@ -10,17 +9,20 @@ public class RecentFileWatcher : IDisposable
 	private InitialWriteSettings? settings = null;
 
 	/// <summary>最近使ったファイルフォルダの監視を開始します。</summary>
-	public async Task StartAsync()
+	public async ValueTask StartAsync()
 	{
 		this.settings = await this.editor.GetInitialWriteSettingsAsync();
 		var recent = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
 
 		// 未登録のファイルがあれば登録してFileSystemWatcherを初期化
-		await this.writeUnregistedFiles(recent)
-			.ContinueWith(t => this.initializedFileSystemWatcher(recent));
+		await this.writeUnregistedFilesAsync(recent);
+		this.initializedFileSystemWatcher(recent);
 	}
 
-	private async Task writeUnregistedFiles(string recentPath)
+	/// <summary>未登録の最近使ったファイルを保存します。</summary>
+	/// <param name="recentPath">最近使ったファイルフォルダのパスを表す文字列。</param>
+	/// <returns>未登録の最近使ったファイルを保存するValueTask。</returns>
+	private async ValueTask writeUnregistedFilesAsync(string recentPath)
 	{
 		var recentDir = new DirectoryInfo(recentPath);
 
@@ -31,7 +33,17 @@ public class RecentFileWatcher : IDisposable
 		}
 	}
 
-	private async Task writeRecentFile(string linkFilePath, DateTime? minDateTime, ShellLink shellLink)
+	/// <summary>最近使ったファイルを保存します。</summary>
+	/// <param name="linkFilePath">ショートカットファイルのパスを表す文字列。</param>
+	/// <param name="minDateTime">
+	/// <para>このパラメータに指定した最小日時をショートカットファイルの最終更新日時が
+	/// 超えたファイルのみ保存します。</para>
+	/// <para>nullを指定した場合は常にlinkFilePathパラメータに指定したショートカットファイルの
+	/// リンク先ファイルが保存されます</para>
+	/// </param>
+	/// <param name="shellLink">ショートカットファイルの情報を取得するShellLink。</param>
+	/// <returns>最近使ったファイルを保存するValueTask。</returns>
+	private async ValueTask writeRecentFile(string linkFilePath, DateTime? minDateTime, ShellLink shellLink)
 	{
 		var linkFile = new FileInfo(linkFilePath);
 
@@ -44,7 +56,10 @@ public class RecentFileWatcher : IDisposable
 		var realPath = shellLink.GetLinkSourceFilePath(linkFilePath);
 
 		if (this.settings!.Extensions.Any(e => e == Path.GetExtension(realPath)))
+		{
+			this.logger.LogInformation(realPath);
 			await this.editor.AddTargetFileAsync(new RegistTargetFile(linkFile.LastWriteTime, realPath));
+		}
 	}
 
 	/// <summary>FileSystemWatcherを初期化します。</summary>
@@ -52,20 +67,24 @@ public class RecentFileWatcher : IDisposable
 	private void initializedFileSystemWatcher(string recentFolderPath)
 	{
 		this.watcher = new FileSystemWatcher(recentFolderPath);
-		this.watcher.Created += (object sender, FileSystemEventArgs e) =>
+		this.watcher.Created += async (object sender, FileSystemEventArgs e) =>
 		{
 			using (var shellLink = new ShellLink())
 			{
-				Console.WriteLine(shellLink.GetLinkSourceFilePath(e.FullPath));
+				await this.writeRecentFile(e.FullPath, null, shellLink).ConfigureAwait(false);
 			}
 		};
 		this.watcher.EnableRaisingEvents = true;
 	}
 
-	private IRecentFileEditor editor;
+	private readonly IRecentFileEditor editor;
+	private readonly ILogger<RecentFileWatcher> logger;
 
-	public RecentFileWatcher(IRecentFileEditor recentFileEditor)
-		=> this.editor = recentFileEditor;
+	/// <summary>コンストラクタ。</summary>
+	/// <param name="recentFileEditor">最近使ったファイルを読み書きするIRecentFileEditor。（DIコンテナからインジェクション）</param>
+	/// <param name="watcherLogger">ログを出力するILogger<RecentFileWatcher>。（DIコンテナからインジェクション）</param>
+	public RecentFileWatcher(IRecentFileEditor recentFileEditor, ILogger<RecentFileWatcher> watcherLogger)
+		=> (this.editor, this.logger) = (recentFileEditor, watcherLogger);
 
 	private bool disposedValue;
 

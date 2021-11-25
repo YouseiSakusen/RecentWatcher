@@ -10,7 +10,7 @@ public class RecentFileEditor : IRecentFileEditor
 	/// <summary>最近使ったファイルをDBに追加します。</summary>
 	/// <param name="targetFile">登録対象のファイルを表すRegistTargetFile。</param>
 	/// <returns>最近使ったファイルをDBに追加するTask。</returns>
-	public async Task AddTargetFileAsync(RegistTargetFile targetFile)
+	public async ValueTask AddTargetFileAsync(RegistTargetFile targetFile)
 	{
 		await using (var connection = await this.connectionFactory.GetConnectionAsync())
 		{
@@ -19,7 +19,10 @@ public class RecentFileEditor : IRecentFileEditor
 			try
 			{
 				// 存在する場合はInsertしない
-				if (!(await connection.ExecuteScalarAsync<DateTime?>(this.getSameAccessTimeRecord(), new { AccessTime = targetFile.AccessTime })).HasValue)
+				var sql = this.getSameAccessTimeRecord();
+				var accessTime = await connection.ExecuteScalarAsync<DateTime?>(sql, new { AccessTime = targetFile.AccessTime });
+
+				if (!accessTime.HasValue)
 					await connection.ExecuteAsync(this.getAddTargetFileSql(), targetFile);
 
 				await tran.CommitAsync();
@@ -66,7 +69,7 @@ public class RecentFileEditor : IRecentFileEditor
 
 	/// <summary>初回書き込み設定を取得します。</summary>
 	/// <returns>初回書き込み設定を取得するTask。</returns>
-	public async Task<InitialWriteSettings> GetInitialWriteSettingsAsync()
+	public async ValueTask<InitialWriteSettings> GetInitialWriteSettingsAsync()
 	{
 		await using (var connection = await this.connectionFactory.GetConnectionAsync())
 		{

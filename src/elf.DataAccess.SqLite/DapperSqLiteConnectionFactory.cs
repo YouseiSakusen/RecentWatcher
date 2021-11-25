@@ -13,7 +13,7 @@ public class DapperSqLiteConnectionFactory : IDapperConnectionFactory
 
 	/// <summary>DbConnectionを取得します。</summary>
 	/// <returns>取得したDbConnection。</returns>
-	public async Task<DbConnection> GetConnectionAsync()
+	public async ValueTask<DbConnection> GetConnectionAsync()
 	{
 		var connection = new SQLiteConnection(this.connectString);
 

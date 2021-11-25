@@ -7,7 +7,7 @@ public interface IDapperConnectionFactory
 {
 	/// <summary>DbConnectionを取得します。</summary>
 	/// <returns>取得したDbConnection。</returns>
-	public Task<DbConnection> GetConnectionAsync();
+	public ValueTask<DbConnection> GetConnectionAsync();
 
 	/// <summary>DBへの接続文字列を取得します。</summary>
 	public string DbConnectString { get; }
