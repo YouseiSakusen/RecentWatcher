@@ -26,8 +26,10 @@ public class RecentFileWatcher : IDisposable
 	{
 		var recentDir = new DirectoryInfo(recentPath);
 
-		using (var shellLink = new ShellLink())
+		await using (var scope = this.scopeFactory.CreateAsyncScope())
 		{
+			var shellLink = scope.ServiceProvider.GetRequiredService<ShellLink>();
+
 			foreach (var item in recentDir.EnumerateFiles("*.lnk"))
 				await this.writeRecentFile(item.FullName, this.settings!.LatestRecentDateTime, shellLink);
 		}
@@ -49,17 +51,14 @@ public class RecentFileWatcher : IDisposable
 
 		if (minDateTime.HasValue)
 		{
-			if (linkFile.LastAccessTime <= minDateTime)
+			if (linkFile.LastWriteTime <= minDateTime)
 				return;
 		}
 
 		var realPath = shellLink.GetLinkSourceFilePath(linkFilePath);
 
 		if (this.settings!.Extensions.Any(e => e == Path.GetExtension(realPath)))
-		{
-			this.logger.LogInformation(realPath);
 			await this.editor.AddTargetFileAsync(new RegistTargetFile(linkFile.LastWriteTime, realPath));
-		}
 	}
 
 	/// <summary>FileSystemWatcherを初期化します。</summary>
@@ -69,8 +68,10 @@ public class RecentFileWatcher : IDisposable
 		this.watcher = new FileSystemWatcher(recentFolderPath);
 		this.watcher.Created += async (object sender, FileSystemEventArgs e) =>
 		{
-			using (var shellLink = new ShellLink())
+			await using (var scope = this.scopeFactory.CreateAsyncScope())
 			{
+				var shellLink = scope.ServiceProvider.GetRequiredService<ShellLink>();
+
 				await this.writeRecentFile(e.FullPath, null, shellLink).ConfigureAwait(false);
 			}
 		};
@@ -79,12 +80,13 @@ public class RecentFileWatcher : IDisposable
 
 	private readonly IRecentFileEditor editor;
 	private readonly ILogger<RecentFileWatcher> logger;
+	private readonly IServiceScopeFactory scopeFactory;
 
 	/// <summary>コンストラクタ。</summary>
 	/// <param name="recentFileEditor">最近使ったファイルを読み書きするIRecentFileEditor。（DIコンテナからインジェクション）</param>
 	/// <param name="watcherLogger">ログを出力するILogger<RecentFileWatcher>。（DIコンテナからインジェクション）</param>
-	public RecentFileWatcher(IRecentFileEditor recentFileEditor, ILogger<RecentFileWatcher> watcherLogger)
-		=> (this.editor, this.logger) = (recentFileEditor, watcherLogger);
+	public RecentFileWatcher(IRecentFileEditor recentFileEditor, ILogger<RecentFileWatcher> watcherLogger, IServiceScopeFactory factory)
+		=> (this.editor, this.logger, this.scopeFactory) = (recentFileEditor, watcherLogger, factory);
 
 	private bool disposedValue;
 

@@ -8,7 +8,15 @@ public class RecentWatcherWorker : BackgroundService
 	/// <returns>ˆ—‚ğÀs‚·‚éTaskB</returns>
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		await this.watcher.StartAsync().ConfigureAwait(false);
+		try
+		{
+			await this.watcher.StartAsync().ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			this.logger.LogError(ex, ex.ToString());
+			throw;
+		}
 
 		var tcs = new TaskCompletionSource<bool>();
 		stoppingToken.Register(s => (s as TaskCompletionSource<bool>)?.SetResult(true), tcs);

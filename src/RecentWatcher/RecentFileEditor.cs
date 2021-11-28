@@ -100,7 +100,7 @@ public class RecentFileEditor : IRecentFileEditor
 	{
 		var sql = new StringBuilder();
 		sql.AppendLine(" SELECT ");
-		sql.AppendLine(" 	coalesce(max(RH.AccessTime), '0001/01/01 00:00:01') AS AccessTime ");
+		sql.AppendLine(" 	coalesce(max(RH.AccessTime), '0001/01/01 00:00:01') AS LatestRecentDateTime ");
 		sql.AppendLine(" FROM ");
 		sql.AppendLine(" 	RecentHistories RH ");
 
