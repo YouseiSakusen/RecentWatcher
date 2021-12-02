@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ヴァニタスの手記 Mémoire 04 「Bal masqué―仮面が嗤う夜―」 %28WebRip 1920x1080 HEVC AAC EMBER%29.mkv.lnk">
+    <None Update="Cat - 78698.mp4.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Cat - 79034é.mp4.lnk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="出会って5秒でバトル 第07話 「暴君」 %28WebRip 1920x1080 HEVC AAC EMBER%29.mkv.lnk">

@@ -1,10 +1,4 @@
 ﻿using Xunit;
-using elf.Windows.Libraries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 
@@ -13,8 +7,8 @@ namespace elf.Windows.Libraries.Tests
 	public class ShellLinkTests
 	{
 		[Theory(DisplayName = "ショートカットファイルあり")]
-		[InlineData(@"H:\出会って5秒でバトル\出会って5秒でバトル 第07話 「暴君」 (WebRip 1920x1080 HEVC AAC EMBER).mkv", @"出会って5秒でバトル 第07話 「暴君」 (WebRip 1920x1080 HEVC AAC EMBER).mkv.lnk")]
-		[InlineData(@"H:\ヴァニタスの手記\ヴァニタスの手記 Mémoire 04 「Bal masqué―仮面が嗤う夜―」 (WebRip 1920x1080 HEVC AAC EMBER).mkv", @"ヴァニタスの手記 Mémoire 04 「Bal masqué―仮面が嗤う夜―」 (WebRip 1920x1080 HEVC AAC EMBER).mkv.lnk")]
+		[InlineData(@"D:\MyVideo\Cat - 78698.mp4", @"Cat - 78698.mp4.lnk")]
+		[InlineData(@"D:\MyVideo\Cat - 79034é.mp4", @"Cat - 79034é.mp4.lnk")]
 		public void GetLinkSourceFilePathTest(string srcPath, string linkFileName)
 		{
 			var linkFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
