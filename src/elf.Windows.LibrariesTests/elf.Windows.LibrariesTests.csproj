@@ -24,13 +24,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Cat - 78698.mp4.lnk">
+    <None Update="チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 第05話 「その① 誘引剤魔獣コイコイ／その② お母さんのブローチ／その③ 腹痛薬ハライタクナイン」.mp4.lnk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Cat - 79034é.mp4.lnk">
+    <None Update="ヴァニタスの手記 Mémoire 04 「Bal masqué―仮面が嗤う夜―」.mp4.lnk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="出会って5秒でバトル 第07話 「暴君」 %28WebRip 1920x1080 HEVC AAC EMBER%29.mkv.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="平穏世代の韋駄天達 #03 「飄」.mp4.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="現実主義勇者の王国再建記 11話 「李代桃僵（りだいとうきょう）」.mp4.lnk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

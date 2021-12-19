@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 
 namespace elf.Windows.Libraries;
 
@@ -28,7 +29,9 @@ public static class WindowsScriptingHosts
 		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 		var s_jisBytes = Encoding.GetEncoding("shift_jis").GetBytes(shortcutFilePath);
 		var s_jisString = Encoding.GetEncoding("shift_jis").GetString(s_jisBytes);
+		Debug.WriteLine(s_jisString);
 
-		return shell.CreateShortcut(Encoding.GetEncoding("shift_jis").GetString(s_jisBytes)).TargetPath;
+		return shell.CreateShortcut(s_jisString).TargetPath;
+		//return shell.CreateShortcut(shortcutFilePath).TargetPath;
 	}
 }
