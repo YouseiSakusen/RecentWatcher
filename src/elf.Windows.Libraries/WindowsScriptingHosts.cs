@@ -26,7 +26,6 @@ public static class WindowsScriptingHosts
 
 		dynamic shell = Activator.CreateInstance(wshType)!;
 
-		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 		var s_jisBytes = Encoding.GetEncoding("shift_jis").GetBytes(shortcutFilePath);
 		var s_jisString = Encoding.GetEncoding("shift_jis").GetString(s_jisBytes);
 		Debug.WriteLine(s_jisString);
@@ -34,4 +33,7 @@ public static class WindowsScriptingHosts
 		return shell.CreateShortcut(s_jisString).TargetPath;
 		//return shell.CreateShortcut(shortcutFilePath).TargetPath;
 	}
+
+	static WindowsScriptingHosts()
+		=> Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 }
