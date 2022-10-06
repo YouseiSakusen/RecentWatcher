@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-RecentWatcher-1423EE51-FE58-4656-8ED0-192B1F74981C</UserSecretsId>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\elf.DataAccess.SqLite\elf.DataAccess.SqLite.csproj" />
+    <ProjectReference Include="..\elf.DataAccessInterfaces\elf.DataAccesses.Interfaces.csproj" />
+    <ProjectReference Include="..\elf.Windows.Libraries\elf.Windows.Libraries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="recentFiles.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
